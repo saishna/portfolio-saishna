@@ -30,12 +30,37 @@
       background-color: var(--deep-space);
       color: var(--starlight);
       scroll-behavior: smooth;
-      background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
-        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
-        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
-      background-size: 550px 550px, 350px 350px, 250px 250px;
-      background-position: 0 0, 40px 60px, 130px 270px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Interactive Background Elements */
+    .bg-particle {
+      position: fixed;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Cursor Follower */
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(199, 75, 176, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50);
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    
+    .cursor-follower.active {
+      width: 60px;
+      height: 60px;
+      background: rgba(199, 75, 176, 0.1);
     }
 
     h1, h2, h3, h4, h5 {
@@ -87,18 +112,19 @@
 
     /* Hero Section */
     #hero {
-      background: linear-gradient(to bottom, var(--deep-space), var(--space-blue));
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 100px 20px;
+      padding: 2rem;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
       position: relative;
       overflow: hidden;
     }
-    
+
     #hero::before {
       content: '';
       position: absolute;
@@ -111,13 +137,14 @@
         radial-gradient(circle at 80% 70%, rgba(199, 75, 176, 0.3) 0%, transparent 40%);
       z-index: 0;
     }
-    
+
     #hero img {
-      width: clamp(120px, 25vw, 170px);
-      height: auto;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      border: 3px solid var(--starlight);
-      margin-bottom: 20px;
+      object-fit: cover;
+      border: 4px solid #00a8ff;
+      margin-bottom: 2rem;
       box-shadow: 
         0 0 25px rgba(255, 255, 255, 0.5),
         0 0 50px rgba(199, 75, 176, 0.6);
@@ -132,129 +159,80 @@
       100% { transform: translateY(0px); }
     }
 
-    #hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
-}
-
-#hero img {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #00a8ff;
-  margin-bottom: 2rem;
-}
-
-#hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-#hero p {
-  font-size: 1.5rem;
-  margin-bottom: 2.5rem;
-  opacity: 0.9;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#hero a {
-  display: inline-block;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-#hero a:first-child {
-  background: linear-gradient(45deg, #00a8ff, #0097e6);
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
-}
-
-#hero a:first-child:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 168, 255, 0.6);
-}
-
-.download-cv {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.download-cv:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #hero h1 {
-    font-size: 2.2rem;
-  }
-  
-  #hero p {
-    font-size: 1.2rem;
-  }
-}
-    
     #hero h1 {
-      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-size: 3rem;
+      margin-bottom: 1rem;
       font-weight: 700;
-      color: var(--starlight);
-      text-shadow: 0 0 15px rgba(199, 75, 176, 0.8);
-      position: relative;
-      z-index: 1;
     }
-    
+
     #hero p {
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      margin: 15px 0;
-      color: var(--starlight);
-      position: relative;
-      z-index: 1;
+      font-size: 1.5rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
     }
-    
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     #hero a {
-      padding: 12px 30px;
-      background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
-      color: var(--starlight);
-      border-radius: 30px;
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 50px;
       text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s;
+      font-weight: 500;
+      transition: all 0.3s ease;
       position: relative;
+      overflow: hidden;
       z-index: 1;
-      box-shadow: 0 0 15px rgba(199, 75, 176, 0.5);
     }
-    
-    #hero a:hover {
-      background: linear-gradient(90deg, var(--nebula-pink), var(--cosmic-purple));
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(199, 75, 176, 0.8);
+
+    #hero a:first-child {
+      background: linear-gradient(45deg, #00a8ff, #0097e6);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+    }
+
+    #hero a:first-child:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 168, 255, 0.6);
+    }
+
+    .download-cv {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .download-cv:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Button Hover Effect */
+    .hover-effect {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hover-effect::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .hover-effect:hover::before {
+      left: 100%;
     }
 
     /* Section Styling */
@@ -297,6 +275,7 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       z-index: 1;
+      cursor: pointer;
     }
     
     .color-card::before {
@@ -317,7 +296,7 @@
     }
     
     .color-card:hover {
-      transform: translateY(-10px);
+      transform: translateY(-10px) scale(1.02);
       box-shadow: 
         0 12px 30px rgba(0, 0, 0, 0.4),
         0 0 20px rgba(199, 75, 176, 0.3);
@@ -371,10 +350,11 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       z-index: 1;
+      cursor: pointer;
     }
     
     .skills-list span:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) rotate(3deg);
       background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
       box-shadow: 0 0 15px rgba(199, 75, 176, 0.5);
     }
@@ -413,6 +393,7 @@
       border-color: var(--nebula-pink);
       box-shadow: 0 0 8px rgba(199, 75, 176, 0.5);
       outline: none;
+      transform: scale(1.02);
     }
     
     #contact form input::placeholder, #contact form textarea::placeholder {
@@ -428,11 +409,13 @@
       transition: 0.3s;
       font-weight: 600;
       box-shadow: 0 0 15px rgba(199, 75, 176, 0.4);
+      cursor: pointer;
     }
     
     #contact button:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(199, 75, 176, 0.6);
+      letter-spacing: 1px;
     }
     
     .input-group-text {
@@ -444,34 +427,40 @@
     .btn-outline-primary {
       border-color: var(--comet-green);
       color: var(--comet-green);
+      transition: all 0.3s;
     }
     
     .btn-outline-primary:hover {
       background-color: var(--comet-green);
       border-color: var(--comet-green);
       color: var(--deep-space);
+      transform: scale(1.1);
     }
     
     .btn-outline-dark {
       border-color: var(--planet-orange);
       color: var(--planet-orange);
+      transition: all 0.3s;
     }
     
     .btn-outline-dark:hover {
       background-color: var(--planet-orange);
       border-color: var(--planet-orange);
       color: var(--deep-space);
+      transform: scale(1.1);
     }
     
     .btn-outline-danger {
       border-color: var(--nebula-pink);
       color: var(--nebula-pink);
+      transition: all 0.3s;
     }
     
     .btn-outline-danger:hover {
       background-color: var(--nebula-pink);
       border-color: var(--nebula-pink);
       color: var(--starlight);
+      transform: scale(1.1);
     }
 
     /* Shooting Stars Animation */
@@ -498,9 +487,176 @@
         width: 5px;
       }
     }
+
+    /* New Space Animations */
+    .space-object {
+      position: fixed;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .planet {
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--planet-orange), var(--cosmic-purple));
+      box-shadow: 0 0 30px var(--planet-orange);
+      animation: float-planet 20s infinite ease-in-out;
+    }
+    
+    .comet {
+      height: 2px;
+      background: linear-gradient(90deg, var(--comet-green), transparent);
+      transform: rotate(45deg);
+      animation: comet-trail 15s infinite linear;
+    }
+    
+    @keyframes float-planet {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(20px, 15px) rotate(5deg); }
+      50% { transform: translate(5px, 25px) rotate(0deg); }
+      75% { transform: translate(15px, 5px) rotate(-5deg); }
+    }
+    
+    @keyframes comet-trail {
+      0% {
+        opacity: 0;
+        transform: translate(-100vw, -100vh) rotate(45deg);
+        width: 0;
+      }
+      10% {
+        opacity: 1;
+        width: 200px;
+      }
+      30% {
+        opacity: 0.5;
+        width: 50px;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(100vw, 100vh) rotate(45deg);
+        width: 10px;
+      }
+    }
+
+    /* Education & Certificates Section */
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--comet-green), var(--nebula-pink));
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 50px;
+      width: 45%;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+    
+    .timeline-item:nth-child(even) {
+      left: 55%;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      top: 20px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--comet-green);
+      box-shadow: 0 0 10px var(--comet-green);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -10px;
+      right: auto;
+    }
+    
+    /* Certificate Cards */
+    .certificate-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      color: var(--starlight);
+      padding: 25px;
+      height: 100%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s;
+      background: rgba(15, 26, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+    }
+    
+    .certificate-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(199, 75, 176, 0.3);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      #hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      #hero p {
+        font-size: 1.2rem;
+      }
+      
+      .cursor-follower {
+        display: none;
+      }
+      
+      .timeline::before {
+        left: 20px;
+      }
+      
+      .timeline-item {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 20px;
+      }
+      
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+      
+      .timeline-dot {
+        left: 10px !important;
+        right: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
+
+<!-- Cursor Follower -->
+<div class="cursor-follower"></div>
+
+<!-- Space Objects -->
+<div class="space-object planet" style="top: 15%; left: 10%; width: 80px; height: 80px;"></div>
+<div class="space-object comet" style="top: 30%; left: 5%;"></div>
+<div class="space-object planet" style="top: 70%; left: 85%; width: 60px; height: 60px; background: radial-gradient(circle at 30% 30%, var(--comet-green), var(--space-blue));"></div>
 
 <!-- Shooting Stars -->
 <div class="shooting-star" style="top: 20%; left: 10%; animation: shootStar 5s linear infinite;"></div>
@@ -519,9 +675,11 @@
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-user-astronaut me-1"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education"><i class="fas fa-graduation-cap me-1"></i> Education</a></li>
         <li class="nav-item"><a class="nav-link" href="#experience"><i class="fas fa-satellite me-1"></i> Experience</a></li>
         <li class="nav-item"><a class="nav-link" href="#projects"><i class="fas fa-stars me-1"></i> Projects</a></li>
         <li class="nav-item"><a class="nav-link" href="#skills"><i class="fas fa-meteor me-1"></i> Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#certificates"><i class="fas fa-certificate me-1"></i> Certificates</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-space-shuttle me-1"></i> Contact</a></li>
       </ul>
     </div>
@@ -533,9 +691,8 @@
   <h1 data-aos="fade-up">Saishna Budhathoki</h1>
   <p data-aos="fade-up" data-aos-delay="200">Machine Learning Engineer • Researcher • Instructor</p>
   <div class="hero-buttons">
-    <a href="#about" data-aos="zoom-in" data-aos-delay="400">Explore My Universe</a>
-    <!-- FIXED: Changed to a relative path or online URL -->
-    <a href="https://drive.google.com/file/d/1qHddtgaLtSmtGhcM4PuQGJoXun1WTPba/view?usp=sharing" download="Saishna_Budhathoki_CV.pdf" class="download-cv" data-aos="zoom-in" data-aos-delay="600">
+    <a href="#about" data-aos="zoom-in" data-aos-delay="400" class="hover-effect">Explore My Universe</a>
+    <a href="https://drive.google.com/file/d/1qHddtgaLtSmtGhcM4PuQGJoXun1WTPba/view?usp=sharing" download="Saishna_Budhathoki_CV.pdf" class="download-cv hover-effect" data-aos="zoom-in" data-aos-delay="600">
       Download My Resume
     </a>
   </div>
@@ -586,6 +743,32 @@
   </div>
 </section>
 
+<!-- Education -->
+<section id="education">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Education</h2>
+    
+    <div class="timeline">
+      <!-- Bachelor's Degree -->
+      <div class="timeline-item color-card card-purple" data-aos="fade-right">
+        <div class="timeline-dot"></div>
+        <h5><i class="fas fa-graduation-cap me-2"></i>Bachelor of Engineering in Software Engineering</h5>
+        <p><b>Nepal College of Information Technology (NCIT)</b> | 2021 – 2025</p>
+        <p>Major: Software Engineering, Minor: Machine Learning</p>
+        <p>Relevant Coursework: Big Data, NLP, Data Analysis, Data Structures & Algorithms</p>
+      </div>
+      
+      <!-- Datacamp Fellowship -->
+      <div class="timeline-item color-card card-green" data-aos="fade-left">
+        <div class="timeline-dot"></div>
+        <h5><i class="fas fa-certificate me-2"></i>Datacamp Fellow - DataScience & AI</h5>
+        <p><b>Online Remote</b> | Feb 2025 – July 2025</p>
+        <p>Access to Premium version with focus on DataScience, DataEngineering, and SQL</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Experience -->
 <section id="experience">
   <div class="container">
@@ -594,7 +777,7 @@
 
       <!-- ICU ML Engineer -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up">
-        <div class="color-card card-purple">
+        <div class="color-card card-purple hover-effect">
           <h5><i class="fas fa-brain me-2"></i>ICU Machine Learning Engineer</h5>
           <p><b>NICRF Nepal</b> (2024 – Present)</p>
           <p>Built predictive models for sepsis, ARDS, MODS, and mortality risk. Collaborated with doctors to optimize ICU treatment strategies.</p>
@@ -603,7 +786,7 @@
 
       <!-- AI/ML Instructor -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="color-card card-green">
+        <div class="color-card card-green hover-effect">
           <h5><i class="fas fa-chalkboard-teacher me-2"></i>AI/ML Instructor</h5>
           <p><b>AIMS International College</b> (2025 – Present)</p>
           <p>Taught Machine Learning, Deep Learning, Python. Mentored students on real-world projects in healthcare AI and NLP.</p>
@@ -612,7 +795,7 @@
 
       <!-- AI Consultant -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-        <div class="color-card card-orange">
+        <div class="color-card card-orange hover-effect">
           <h5><i class="fas fa-robot me-2"></i>AI Consultant</h5>
           <p><b>AITC International Software</b> (2025 – Present)</p>
           <p>Delivered training on ML & Python. Built real-world algorithms and designed workshops tailored for beginners & intermediate learners.</p>
@@ -621,7 +804,7 @@
 
       <!-- Techleadhers Fellow -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-        <div class="color-card card-pink">
+        <div class="color-card card-pink hover-effect">
           <h5><i class="fas fa-medal me-2"></i>Techleadhers Fellow</h5>
           <p><b>Aaviyanta Foundation</b> (2024 – 2025)</p>
           <p>Winner of project competition. Built GIS & AI-based disaster management system for real-time flood monitoring & climate change prediction.</p>
@@ -630,7 +813,7 @@
 
       <!-- Python Instructor -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
-        <div class="color-card card-purple">
+        <div class="color-card card-purple hover-effect">
           <h5><i class="fas fa-code me-2"></i>Python & DataScience Instructor</h5>
           <p><b>NAMI College</b> (Nov 2024 – Feb 2025)</p>
           <p>Taught RAG, LLMs & multimodal AI to 150+ students. Designed real-world projects and mentored student research work.</p>
@@ -639,7 +822,7 @@
 
       <!-- Mentor NOSK -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-        <div class="color-card card-green">
+        <div class="color-card card-green hover-effect">
           <h5><i class="fas fa-hands-helping me-2"></i>Mentor – Hackathon</h5>
           <p><b>Nepal Open Source Klub (2024)</b></p>
           <p>Guided hackathon participants on open-source tools, scalability, and building AI-powered real-world solutions.</p>
@@ -648,7 +831,7 @@
 
       <!-- Mentor Dristi -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
-        <div class="color-card card-orange">
+        <div class="color-card card-orange hover-effect">
           <h5><i class="fas fa-users me-2"></i>Mentor – Dristi 2.0</h5>
           <p><b>KEC Nepal (2024)</b></p>
           <p>Supported 60+ project groups. Provided guidance in healthcare, education, and AI innovation projects for competitions.</p>
@@ -657,7 +840,7 @@
 
       <!-- Mentor NAMI -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="700">
-        <div class="color-card card-pink">
+        <div class="color-card card-pink hover-effect">
           <h5><i class="fas fa-graduation-cap me-2"></i>Mentor – Student Projects</h5>
           <p><b>NAMI College (2024)</b></p>
           <p>Mentored undergraduate students on ML project implementation and aligning academic work with real-world AI practices.</p>
@@ -666,7 +849,7 @@
 
       <!-- Mentor Nagarjun -->
       <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="800">
-        <div class="color-card card-purple">
+        <div class="color-card card-purple hover-effect">
           <h5><i class="fas fa-lightbulb me-2"></i>Mentor – AI/ML</h5>
           <p><b>Nagarjun College of IT (2024)</b></p>
           <p>Guided multiple project teams on cloud computing, AI, and ML fundamentals. Supported innovative research-based projects.</p>
@@ -685,7 +868,7 @@
 
       <!-- Sepsis -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in">
-        <div class="color-card card-pink">
+        <div class="color-card card-pink hover-effect">
           <h5><i class="fas fa-laptop-medical me-2"></i>Sepsis & Polyp Detection</h5>
           <p>Led AI development for sepsis detection across 15+ hospitals including TU Teaching Hospital & Mediciti. Deployed real-time diagnostic support systems.</p>
         </div>
@@ -693,15 +876,15 @@
 
       <!-- Kaya Vyayam Guru -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
-        <div class="color-card card-green">
+        <div class="color-card card-green hover-effect">
           <h5><i class="fas fa-dumbbell me-2"></i>Kaya Vyayam Guru with AI Recommendation</h5>
-          <p>Built AI-based fitness system with posture tracking (MediaPipe), diet recommendation, speech translation, and real-time exercise form correction.</p>
+          <p>Built AI-based fitness system with posture tracking (CNN), diet recommendation(K-Means Clustering), speech translation, and real-time exercise form correction.</p>
         </div>
       </div>
 
       <!-- License Plate -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-        <div class="color-card card-purple">
+        <div class="color-card card-purple hover-effect">
           <h5><i class="fas fa-car me-2"></i>Devanagari License Plate Recognition</h5>
           <p>YOLOv8 + OCR pipeline for Nepali license plates. Achieved 98% accuracy for real-time vehicle recognition and traffic automation.</p>
         </div>
@@ -709,7 +892,7 @@
 
       <!-- Emotion Intelligence -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-        <div class="color-card card-orange">
+        <div class="color-card card-orange hover-effect">
           <h5><i class="fas fa-smile me-2"></i>Multimodal Emotion Intelligence</h5>
           <p>Developed system analyzing text, audio & visual data. Achieved 91% accuracy in emotion detection using transformers, applied to customer engagement.</p>
         </div>
@@ -717,7 +900,7 @@
 
       <!-- Student Performance -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="400">
-        <div class="color-card card-green">
+        <div class="color-card card-green hover-effect">
           <h5><i class="fas fa-graduation-cap me-2"></i>Student Performance Analysis</h5>
           <p>Built classification model using Logistic Regression & Random Forest to predict student success from grades, attendance, and study habits.</p>
         </div>
@@ -725,7 +908,7 @@
 
       <!-- Movie Recommendation -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="500">
-        <div class="color-card card-pink">
+        <div class="color-card card-pink hover-effect">
           <h5><i class="fas fa-film me-2"></i>Movie Recommendation System</h5>
           <p>Developed hybrid recommender using collaborative & content-based filtering. Personalized movie suggestions leveraging user ratings & genres.</p>
         </div>
@@ -733,7 +916,7 @@
 
       <!-- Pneumonia Detection -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="600">
-        <div class="color-card card-purple">
+        <div class="color-card card-purple hover-effect">
           <h5><i class="fas fa-lungs me-2"></i>Pneumonia Detection System</h5>
           <p>CNN (TensorFlow + Keras) deployed with Streamlit. Real-time chest X-ray classification system for pneumonia diagnosis.</p>
         </div>
@@ -741,7 +924,7 @@
 
       <!-- E-commerce -->
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="700">
-        <div class="color-card card-orange">
+        <div class="color-card card-orange hover-effect">
           <h5><i class="fas fa-shopping-cart me-2"></i>E-commerce Website</h5>
           <p>Developed online shopping platform using Django, HTML, CSS & JavaScript with secure cart & order management features.</p>
         </div>
@@ -771,6 +954,129 @@
     </div>
   </div>
 </section>
+
+<!-- Certificates -->
+<section id="certificates">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Certificates</h2>
+    <div class="row g-4">
+
+      <!-- AWS -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+        <a href="https://www.credly.com/badges/197de5df-8dfb-49e8-98e6-78d0bcc63f47/linked_in?t=sz5cqx" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-cloud me-2"></i>AWS Graduate – Cloud Foundation</h5>
+            <p>Credential verified via Credly</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+        <a href="https://www.credly.com/badges/6252b193-9b21-46bd-9b36-66148f9005f9/public_url" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-cloud me-2"></i>AWS Academy Graduate –  Generative AI Foundations</h5>
+            <p>Credential verified via Credly</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- DataCamp Certificates -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <a href="https://www.datacamp.com/certificate/DEA0019561300123" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-database me-2"></i>Certified Data Engineer Associate</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <a href="https://www.datacamp.com/certificate/DSA0015829594005" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-brain me-2"></i>Certified Data Scientist Associate</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <a href="https://www.datacamp.com/certificate/DAA0013244650850" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-chart-line me-2"></i>Certified Data Analyst</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="400">
+        <a href="https://www.datacamp.com/certificate/SQA0012295121291" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-code me-2"></i>SQL Associate</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Data Literacy & AI Engineer -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="500">
+        <a href="https://www.datacamp.com/skill-verification/DL0037082512774" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-book me-2"></i>Data Literacy</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="600">
+        <a href="https://www.datacamp.com/skill-verification/AIF0023515504426" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-robot me-2"></i>AI Engineer Certification</h5>
+            <p>Issued by DataCamp</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Microsoft & LinkedIn -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="700">
+        <a href="https://www.linkedin.com/learning/certificates/8ac4ab96b1069ddf88015c2c2ac4d0f27ee694f7b1e77e934bf6825d4e0e3c5f" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-tasks me-2"></i>Project Management</h5>
+            <p>Issued by Microsoft</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="800">
+        <a href="https://www.linkedin.com/learning/certificates/16abe2c3390f807bdc34f03692301d965ec8a9dce663dd3ab5a36b620aa1ae37" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-lightbulb me-2"></i>Career Essentials in Generative AI</h5>
+            <p>Issued by Microsoft & LinkedIn</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Techleadhers & SheCodes -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="900">
+        <a href="https://www.linkedin.com/posts/techleadhers_techleadhers-finalprojectwinner-teamuddhar-activity-7334596039120687105-v5rY" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-medal me-2"></i>Techleadhers Project Winner</h5>
+            <p>Aaviyanta Foundation</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="1000">
+        <a href="https://www.shecodes.io/certificates/782e684ced917713b11e1ce2172e8018" target="_blank" class="text-decoration-none">
+          <div class="certificate-card hover-effect">
+            <h5><i class="fas fa-code-branch me-2"></i>SheCodes Basics</h5>
+            <p>Certified in Web Development</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <!-- Contact -->
 <section id="contact">
@@ -805,7 +1111,7 @@
             
             <!-- Submit -->
             <div class="text-center">
-              <button type="submit" class="btn btn-lg px-4">
+              <button type="submit" class="btn btn-lg px-4 hover-effect">
                 <i class="fas fa-paper-plane me-2"></i>Send Message
               </button>
             </div>
@@ -835,7 +1141,7 @@
 
 <!-- Footer -->
 <footer class="text-center py-4" style="background: var(--space-blue);">
-  <p class="mb-0">© 2023 Saishna Budhathoki. Exploring the AI Universe.</p>
+  <p class="mb-0">© 2025 Saishna Budhathoki. All rights reserved</p>
 </footer>
 
 <!-- Scripts -->
@@ -858,6 +1164,69 @@
   }
   
   createShootingStars();
+  
+  // Create background particles
+  function createParticles() {
+    const container = document.body;
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('bg-particle');
+      
+      // Random size and position
+      const size = Math.random() * 5 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.left = `${Math.random() * 100}%`;
+      
+      // Add animation
+      particle.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite ${Math.random() * 5}s`;
+      
+      // Add to document
+      container.appendChild(particle);
+    }
+  }
+  
+  createParticles();
+  
+  // Custom cursor effect
+  const cursor = document.querySelector('.cursor-follower');
+  
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+  });
+  
+  // Add active class on click
+  document.addEventListener('mousedown', () => {
+    cursor.classList.add('active');
+  });
+  
+  document.addEventListener('mouseup', () => {
+    cursor.classList.remove('active');
+  });
+  
+  // Add active class when hovering over clickable elements
+  const clickables = document.querySelectorAll('a, button, .color-card, .skills-list span');
+  
+  clickables.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      cursor.classList.add('active');
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      cursor.classList.remove('active');
+    });
+  });
 </script>
+
+<style>
+  /* Add twinkle animation for particles */
+  @keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+</style>
 </body>
 </html>
