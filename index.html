@@ -1,127 +1,862 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css libraries -->
-    <link rel="stylesheet" href="library/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="library/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/custom.css">
-    <!-- title -->
-    <title>Saishna Budhathoki</title>
-    <link rel="icon" type="image/png" href="img/saishna.jpg"> 
-</head>   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saishna Budhathoki | Machine Learning Engineer</title>
+
+  <!-- Bootstrap + Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+
+  <style>
+    :root {
+      --deep-space: #0a0e17;
+      --space-blue: #0f1a2a;
+      --cosmic-purple: #4e1d7f;
+      --nebula-pink: #c74bb0;
+      --starlight: #f5f9ff;
+      --planet-orange: #ff7e30;
+      --comet-green: #00e6cc;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--deep-space);
+      color: var(--starlight);
+      scroll-behavior: smooth;
+      background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
+      background-size: 550px 550px, 350px 350px, 250px 250px;
+      background-position: 0 0, 40px 60px, 130px 270px;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(10, 14, 23, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 3px 15px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--starlight) !important;
+      text-shadow: 0 0 10px rgba(199, 75, 176, 0.7);
+    }
+    
+    .nav-link {
+      color: var(--starlight) !important;
+      font-weight: 500;
+      margin-left: 15px;
+      transition: 0.3s;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--comet-green), var(--nebula-pink));
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .nav-link:hover {
+      color: var(--comet-green) !important;
+      text-shadow: 0 0 8px rgba(0, 230, 204, 0.6);
+    }
+
+    /* Hero Section */
+    #hero {
+      background: linear-gradient(to bottom, var(--deep-space), var(--space-blue));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(78, 29, 127, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(199, 75, 176, 0.3) 0%, transparent 40%);
+      z-index: 0;
+    }
+    
+    #hero img {
+      width: clamp(120px, 25vw, 170px);
+      height: auto;
+      border-radius: 50%;
+      border: 3px solid var(--starlight);
+      margin-bottom: 20px;
+      box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.5),
+        0 0 50px rgba(199, 75, 176, 0.6);
+      animation: float 4s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0px); }
+    }
+
+    #hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+#hero img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00a8ff;
+  margin-bottom: 2rem;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+#hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#hero a {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+#hero a:first-child {
+  background: linear-gradient(45deg, #00a8ff, #0097e6);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+}
+
+#hero a:first-child:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 168, 255, 0.6);
+}
+
+.download-cv {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.download-cv:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  #hero p {
+    font-size: 1.2rem;
+  }
+}
+    
+    #hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--starlight);
+      text-shadow: 0 0 15px rgba(199, 75, 176, 0.8);
+      position: relative;
+      z-index: 1;
+    }
+    
+    #hero p {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      margin: 15px 0;
+      color: var(--starlight);
+      position: relative;
+      z-index: 1;
+    }
+    
+    #hero a {
+      padding: 12px 30px;
+      background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
+      color: var(--starlight);
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 15px rgba(199, 75, 176, 0.5);
+    }
+    
+    #hero a:hover {
+      background: linear-gradient(90deg, var(--nebula-pink), var(--cosmic-purple));
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(199, 75, 176, 0.8);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 80px 20px;
+      position: relative;
+    }
+    
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 40px;
+      text-align: center;
+      color: var(--starlight);
+      text-shadow: 0 0 10px rgba(0, 230, 204, 0.5);
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--comet-green), var(--nebula-pink));
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    /* Colorful Cards */
+    .color-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      color: var(--starlight);
+      padding: 25px;
+      height: 100%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s;
+      background: rgba(15, 26, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .color-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(78, 29, 127, 0.3), rgba(199, 75, 176, 0.2));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .color-card:hover::before {
+      opacity: 1;
+    }
+    
+    .color-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(199, 75, 176, 0.3);
+    }
+    
+    .card-purple { border-left: 4px solid var(--cosmic-purple); }
+    .card-green { border-left: 4px solid var(--comet-green); }
+    .card-pink { border-left: 4px solid var(--nebula-pink); }
+    .card-orange { border-left: 4px solid var(--planet-orange); }
+    
+    .color-card h5 {
+      font-weight: 600;
+      color: var(--starlight);
+    }
+    
+    .color-card p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    /* Skills Section */
+    #skills {
+      background: linear-gradient(to bottom, var(--space-blue), var(--deep-space));
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #skills::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 70% 20%, rgba(0, 230, 204, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 30% 80%, rgba(255, 126, 48, 0.1) 0%, transparent 30%);
+      z-index: 0;
+    }
+    
+    .skills-list span {
+      display: inline-block;
+      background: rgba(15, 26, 42, 0.8);
+      color: var(--starlight);
+      margin: 8px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .skills-list span:hover {
+      transform: scale(1.1);
+      background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
+      box-shadow: 0 0 15px rgba(199, 75, 176, 0.5);
+    }
+
+    /* Contact Section */
+    #contact {
+      background: linear-gradient(135deg, var(--space-blue), var(--deep-space));
+      position: relative;
+    }
+    
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(78, 29, 127, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(199, 75, 176, 0.2) 0%, transparent 40%);
+      z-index: 0;
+    }
+    
+    #contact form input, #contact form textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: 0.3s;
+      background: rgba(15, 26, 42, 0.7);
+      color: var(--starlight);
+    }
+    
+    #contact form input:focus, #contact form textarea:focus {
+      border-color: var(--nebula-pink);
+      box-shadow: 0 0 8px rgba(199, 75, 176, 0.5);
+      outline: none;
+    }
+    
+    #contact form input::placeholder, #contact form textarea::placeholder {
+      color: rgba(245, 249, 255, 0.6);
+    }
+    
+    #contact button {
+      background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
+      color: var(--starlight);
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      transition: 0.3s;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(199, 75, 176, 0.4);
+    }
+    
+    #contact button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(199, 75, 176, 0.6);
+    }
+    
+    .input-group-text {
+      background: linear-gradient(90deg, var(--cosmic-purple), var(--nebula-pink));
+      border: none;
+      color: var(--starlight);
+    }
+    
+    .btn-outline-primary {
+      border-color: var(--comet-green);
+      color: var(--comet-green);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--comet-green);
+      border-color: var(--comet-green);
+      color: var(--deep-space);
+    }
+    
+    .btn-outline-dark {
+      border-color: var(--planet-orange);
+      color: var(--planet-orange);
+    }
+    
+    .btn-outline-dark:hover {
+      background-color: var(--planet-orange);
+      border-color: var(--planet-orange);
+      color: var(--deep-space);
+    }
+    
+    .btn-outline-danger {
+      border-color: var(--nebula-pink);
+      color: var(--nebula-pink);
+    }
+    
+    .btn-outline-danger:hover {
+      background-color: var(--nebula-pink);
+      border-color: var(--nebula-pink);
+      color: var(--starlight);
+    }
+
+    /* Shooting Stars Animation */
+    .shooting-star {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, var(--starlight), transparent);
+      opacity: 0;
+      z-index: 0;
+    }
+    
+    @keyframes shootStar {
+      0% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) rotate(45deg);
+        width: 0;
+      }
+      10% {
+        width: 100px;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(500px) translateY(-500px) rotate(45deg);
+        width: 5px;
+      }
+    }
+  </style>
+</head>
 <body>
-    <!-- navigation -->
-    <header>
 
-        <nav class="navbar navbar-expand-lg bg-light fixed-top py-3">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#home">
-                <a class="navbar-brand" href="#home">
-                <img src="img/addYourPhotos.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                Saishna 
-              </a></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
+<!-- Shooting Stars -->
+<div class="shooting-star" style="top: 20%; left: 10%; animation: shootStar 5s linear infinite;"></div>
+<div class="shooting-star" style="top: 60%; left: 5%; animation: shootStar 7s linear infinite 2s;"></div>
+<div class="shooting-star" style="top: 40%; left: 15%; animation: shootStar 6s linear infinite 4s;"></div>
 
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#hero">
+      <i class="fas fa-rocket me-2"></i>Saishna
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon text-white"><i class="fas fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-user-astronaut me-1"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience"><i class="fas fa-satellite me-1"></i> Experience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects"><i class="fas fa-stars me-1"></i> Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills"><i class="fas fa-meteor me-1"></i> Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-space-shuttle me-1"></i> Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    <a class="nav-link active" aria-current="page" href="#home">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#aboutme">About me</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact me</a>
-                  </li>
-                </ul>
-                 
-              </div>
-            </div>
-          </nav>
-
-
-    </header>
-
-    <!-- home -->
-    <section id="home">
-        <div id="particles-js"></div>
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-md-12 justify-content-center">
-                    <h1 id="name"> Saishna Budhathoki</h1>
-                    <p id="tagline">I am a BESE Student</p>
-                    <a href="#aboutme" id="learnmore"><i class="fa fa-angle-down"></i><span id="read">learn more</span></a>
-                 </div>
-            </div>
-        </div>
-        
-
-
-    <section id="aboutme">
-        <div class="container2 py-5">
-            <div class="row">
-                <h2  class="title text-center w-100">Hi, I am Saishna Budhathoki.</h2>
-                <p class="about text-center w-75 mx-auto">I am student of Software Enginnering. I love coding, exploring adversity and web enthusiest</p>
-            </div>
-            <div class="row">
-                <h2 class="title text-center w-100">My Topic Of Interest </h2>          
-            </div>
-
-        <div class="card">
-            <div class="row">
-                
-                        <div class="card" style="width: 18rem;">
-                            <img src="https://1.bp.blogspot.com/-yfnIkeXJlGc/XqadhzfV67I/AAAAAAAAAPM/DHEQb47s8jUPFDKCnLGfhVsLUdYGswJ6QCLcBGAsYHQ/s1600/WHAT%2BIS%2BPROGRAMMING%2B1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title">Programming</h5>
-                              <p class="card-text">i love programming.</p>
-                              <a href="#" class="btn btn-primary">more</a>
-                            </div>
-                        </div>
-
-            </div>
-        </div>
-
-    </section>
-
-    
+<section id="hero">
+  <img src="img/saishna.jpg" alt="Saishna Budhathoki">
+  <h1 data-aos="fade-up">Saishna Budhathoki</h1>
+  <p data-aos="fade-up" data-aos-delay="200">Machine Learning Engineer • Researcher • Instructor</p>
+  <div class="hero-buttons">
+    <a href="#about" data-aos="zoom-in" data-aos-delay="400">Explore My Universe</a>
+    <a href="D:\e\Projects\New folder\portfolio-saishna\Sayu (3).pdf" download class="download-cv" data-aos="zoom-in" data-aos-delay="600">
+      Download My CV
+    </a>
+  </div>
 </section>
 
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">About Me</h2>
+    <div class="row align-items-center">
+      
+      <!-- Profile Image -->
+      <div class="col-md-4 text-center mb-4 mb-md-0" data-aos="fade-right">
+        <img src="img/saishna.jpg" alt="Saishna Budhathoki" 
+             class="img-fluid rounded-circle shadow-lg" 
+             style="width: 220px; height: 220px; object-fit: cover;
+                    border: 3px solid var(--starlight);
+                    box-shadow: 0 0 25px rgba(199, 75, 176, 0.6);">
+      </div>
+      
+      <!-- Text -->
+      <div class="col-md-8" data-aos="fade-left">
+        <div class="p-4 rounded-4" 
+             style="background: rgba(15, 26, 42, 0.7); backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+          <p class="lead mb-3">
+            I am <strong>Saishna Budhathoki</strong>, a passionate Machine Learning Engineer exploring the 
+            <b>AI universe</b> with focus on healthcare, computer vision, and NLP.
+          </p>
+          <p class="mb-4">
+            With 2+ years of experience, I've built solutions for <b>ICU data analysis</b>, 
+            mentored <b>200+ students</b>, published books, and spoken at top events.  
+            I love discovering how AI can transform <b>society and healthcare</b>.
+          </p>
+
+          <!-- Highlights -->
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-star me-2" style="color: var(--comet-green);"></i> Mentor to 200+ students in AI/ML</li>
+            <li class="mb-2"><i class="fas fa-star me-2" style="color: var(--comet-green);"></i> Published books on AI & DSA</li>
+            <li class="mb-2"><i class="fas fa-star me-2" style="color: var(--comet-green);"></i> Speaker at Google DevFest Kathmandu</li>
+            <li class="mb-2"><i class="fas fa-star me-2" style="color: var(--comet-green);"></i> Techleadhers Fellowship Project Winner</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Experience</h2>
+    <div class="row g-4">
+
+      <!-- ICU ML Engineer -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="color-card card-purple">
+          <h5><i class="fas fa-brain me-2"></i>ICU Machine Learning Engineer</h5>
+          <p><b>NICRF Nepal</b> (2024 – Present)</p>
+          <p>Built predictive models for sepsis, ARDS, MODS, and mortality risk. Collaborated with doctors to optimize ICU treatment strategies.</p>
+        </div>
+      </div>
+
+      <!-- AI/ML Instructor -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="color-card card-green">
+          <h5><i class="fas fa-chalkboard-teacher me-2"></i>AI/ML Instructor</h5>
+          <p><b>AIMS International College</b> (2025 – Present)</p>
+          <p>Taught Machine Learning, Deep Learning, Python. Mentored students on real-world projects in healthcare AI and NLP.</p>
+        </div>
+      </div>
+
+      <!-- AI Consultant -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="color-card card-orange">
+          <h5><i class="fas fa-robot me-2"></i>AI Consultant</h5>
+          <p><b>AITC International Software</b> (2025 – Present)</p>
+          <p>Delivered training on ML & Python. Built real-world algorithms and designed workshops tailored for beginners & intermediate learners.</p>
+        </div>
+      </div>
+
+      <!-- Techleadhers Fellow -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="color-card card-pink">
+          <h5><i class="fas fa-medal me-2"></i>Techleadhers Fellow</h5>
+          <p><b>Aaviyanta Foundation</b> (2024 – 2025)</p>
+          <p>Winner of project competition. Built GIS & AI-based disaster management system for real-time flood monitoring & climate change prediction.</p>
+        </div>
+      </div>
+
+      <!-- Python Instructor -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="color-card card-purple">
+          <h5><i class="fas fa-code me-2"></i>Python & DataScience Instructor</h5>
+          <p><b>NAMI College</b> (Nov 2024 – Feb 2025)</p>
+          <p>Taught RAG, LLMs & multimodal AI to 150+ students. Designed real-world projects and mentored student research work.</p>
+        </div>
+      </div>
+
+      <!-- Mentor NOSK -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="color-card card-green">
+          <h5><i class="fas fa-hands-helping me-2"></i>Mentor – Hackathon</h5>
+          <p><b>Nepal Open Source Klub (2024)</b></p>
+          <p>Guided hackathon participants on open-source tools, scalability, and building AI-powered real-world solutions.</p>
+        </div>
+      </div>
+
+      <!-- Mentor Dristi -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+        <div class="color-card card-orange">
+          <h5><i class="fas fa-users me-2"></i>Mentor – Dristi 2.0</h5>
+          <p><b>KEC Nepal (2024)</b></p>
+          <p>Supported 60+ project groups. Provided guidance in healthcare, education, and AI innovation projects for competitions.</p>
+        </div>
+      </div>
+
+      <!-- Mentor NAMI -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="700">
+        <div class="color-card card-pink">
+          <h5><i class="fas fa-graduation-cap me-2"></i>Mentor – Student Projects</h5>
+          <p><b>NAMI College (2024)</b></p>
+          <p>Mentored undergraduate students on ML project implementation and aligning academic work with real-world AI practices.</p>
+        </div>
+      </div>
+
+      <!-- Mentor Nagarjun -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="800">
+        <div class="color-card card-purple">
+          <h5><i class="fas fa-lightbulb me-2"></i>Mentor – AI/ML</h5>
+          <p><b>Nagarjun College of IT (2024)</b></p>
+          <p>Guided multiple project teams on cloud computing, AI, and ML fundamentals. Supported innovative research-based projects.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Major Projects</h2>
+    <div class="row g-4">
+
+      <!-- Sepsis -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+        <div class="color-card card-pink">
+          <h5><i class="fas fa-laptop-medical me-2"></i>Sepsis & Polyp Detection</h5>
+          <p>Led AI development for sepsis detection across 15+ hospitals including TU Teaching Hospital & Mediciti. Deployed real-time diagnostic support systems.</p>
+        </div>
+      </div>
+
+      <!-- Kaya Vyayam Guru -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="color-card card-green">
+          <h5><i class="fas fa-dumbbell me-2"></i>Kaya Vyayam Guru with AI Recommendation</h5>
+          <p>Built AI-based fitness system with posture tracking (MediaPipe), diet recommendation, speech translation, and real-time exercise form correction.</p>
+        </div>
+      </div>
+
+      <!-- License Plate -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="color-card card-purple">
+          <h5><i class="fas fa-car me-2"></i>Devanagari License Plate Recognition</h5>
+          <p>YOLOv8 + OCR pipeline for Nepali license plates. Achieved 98% accuracy for real-time vehicle recognition and traffic automation.</p>
+        </div>
+      </div>
+
+      <!-- Emotion Intelligence -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="color-card card-orange">
+          <h5><i class="fas fa-smile me-2"></i>Multimodal Emotion Intelligence</h5>
+          <p>Developed system analyzing text, audio & visual data. Achieved 91% accuracy in emotion detection using transformers, applied to customer engagement.</p>
+        </div>
+      </div>
+
+      <!-- Student Performance -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="400">
+        <div class="color-card card-green">
+          <h5><i class="fas fa-graduation-cap me-2"></i>Student Performance Analysis</h5>
+          <p>Built classification model using Logistic Regression & Random Forest to predict student success from grades, attendance, and study habits.</p>
+        </div>
+      </div>
+
+      <!-- Movie Recommendation -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="500">
+        <div class="color-card card-pink">
+          <h5><i class="fas fa-film me-2"></i>Movie Recommendation System</h5>
+          <p>Developed hybrid recommender using collaborative & content-based filtering. Personalized movie suggestions leveraging user ratings & genres.</p>
+        </div>
+      </div>
+
+      <!-- Pneumonia Detection -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="600">
+        <div class="color-card card-purple">
+          <h5><i class="fas fa-lungs me-2"></i>Pneumonia Detection System</h5>
+          <p>CNN (TensorFlow + Keras) deployed with Streamlit. Real-time chest X-ray classification system for pneumonia diagnosis.</p>
+        </div>
+      </div>
+
+      <!-- E-commerce -->
+      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="700">
+        <div class="color-card card-orange">
+          <h5><i class="fas fa-shopping-cart me-2"></i>E-commerce Website</h5>
+          <p>Developed online shopping platform using Django, HTML, CSS & JavaScript with secure cart & order management features.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="container text-center">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-list" data-aos="fade-up">
+      <span><i class="fab fa-python me-2"></i>Python</span>
+      <span>TensorFlow</span>
+      <span>PyTorch</span>
+      <span><i class="fas fa-eye me-2"></i>Computer Vision</span>
+      <span>NLP</span>
+      <span><i class="fas fa-database me-2"></i>Big Data</span>
+      <span>Flask</span>
+      <span>React</span>
+      <span>SQL</span>
+      <span><i class="fas fa-robot me-2"></i>Machine Learning</span>
+      <span>Deep Learning</span>
+      <span><i class="fas fa-brain me-2"></i>AI</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
 <section id="contact">
+  <div class="container">
+    <h2 class="section-title text-white" data-aos="fade-up">Contact Me</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="p-4 p-md-5 rounded-4 shadow-lg" 
+             style="background: rgba(15, 26, 42, 0.8); backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);" 
+             data-aos="zoom-in">
+          
+          <!-- Form -->
+          <form>
+            <!-- Name -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+              <input type="text" class="form-control" placeholder="Your Name" required>
+            </div>
+            
+            <!-- Email -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            
+            <!-- Message -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="fa fa-comment"></i></span>
+              <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+            </div>
+            
+            <!-- Submit -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-lg px-4">
+                <i class="fas fa-paper-plane me-2"></i>Send Message
+              </button>
+            </div>
+          </form>
 
-    <h1 align="center">Hi! Contact me here</h1>
+          <!-- Social Links -->
+          <div class="text-center mt-4">
+            <a href="https://www.linkedin.com/in/saishna-budhathoki-807974282/" target="_blank" 
+               class="btn btn-outline-primary btn-lg rounded-circle mx-2">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/saishna" target="_blank" 
+               class="btn btn-outline-dark btn-lg rounded-circle mx-2">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="mailto:saishna.budhathoki@gmail.com" 
+               class="btn btn-outline-danger btn-lg rounded-circle mx-2">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
 
-    <form action="saishna.budhathoki@gmail.com" method="get">
-
-        <i class="fa-solid fa-person"> <input type="text" class="make"name="username" placeholder="Name"><i class="fa-solid fa-person"></i> 
-        <i class="fa-solid fa-person"></i> <input type="email" class="make" name="username" placeholder="Email"><br><br>
-        <i class="fa-solid fa-person"></i><textarea value="text here"> </textarea><br>
-        <button class="submit" type="submit">submit</button>
-
-
-    </form>
-
-
-
-
-
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/smooth-scroll.js"></script>
-    <script type="text/javascript" src="js/wow.js"></script>
-     <script type="text/javascript" src="js/particles.js"></script>
-     <script type="text/javascript" src="js/app.js"></script>
-    
+<!-- Footer -->
+<footer class="text-center py-4" style="background: var(--space-blue);">
+  <p class="mb-0">© 2023 Saishna Budhathoki. Exploring the AI Universe.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000, once: true });
+  
+  // Create shooting stars dynamically
+  function createShootingStars() {
+    const container = document.body;
+    for (let i = 0; i < 5; i++) {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 20 + '%';
+      star.style.animation = `shootStar ${5 + Math.random() * 5}s linear infinite ${Math.random() * 5}s`;
+      container.appendChild(star);
+    }
+  }
+  
+  createShootingStars();
+</script>
 </body>
 </html>
